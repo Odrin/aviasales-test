@@ -1,0 +1,5 @@
+const CURRENCY_RUB = 'RUB';
+const CURRENCY_USD = 'USD';
+const CURRENCY_EUR = 'EUR';
+
+export { CURRENCY_RUB, CURRENCY_USD, CURRENCY_EUR };
