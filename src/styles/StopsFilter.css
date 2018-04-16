@@ -1,0 +1,54 @@
+.stops-filter {
+
+}
+
+.stops-filter .stops-title {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.58;
+  letter-spacing: .5px;
+  color: #4a4a4a;
+  text-transform: uppercase;
+  margin-bottom: 7px;
+}
+
+.stops-filter .stops-row {
+  display: flex;
+  margin: 0 -15px;
+  padding: 0 15px;
+  background-color: #fff;
+  /*transition: background-color .3s ease;*/
+}
+
+.stops-filter .stops-row:hover {
+  background-color: #f1fcff;
+}
+
+.stops-filter .checkbox {
+  flex: 0 0 auto;
+}
+
+.stops-filter .stops-only {
+  flex: 0 0 auto;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 3.18;
+  letter-spacing: .5px;
+  text-align: right;
+  text-transform: uppercase;
+  color: #2196f3;
+  padding: 0;
+  border: none;
+  margin-left: auto;
+  background-color: transparent;
+  opacity: 0;
+  transition: opacity .3s ease;
+}
+
+.stops-filter .stops-only:hover {
+  cursor: pointer;
+}
+
+.stops-filter .stops-row:hover .stops-only {
+  opacity: 1;
+}

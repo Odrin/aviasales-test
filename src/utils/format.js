@@ -14,7 +14,7 @@ export function formatPrice(price) {
     _price = Math.floor(_price / 1000);
 
     if (_price > 0) {
-      result.push(padEnd(remainder, 3, '0'));
+      result.push(remainder.padEnd(3, '0'));
     } else {
       result.push(remainder);
     }
@@ -44,24 +44,15 @@ export function formatDate(date) {
   return moment(date, 'DD.MM.YY').format('D MMM YYYY, dd');
 }
 
-/**
- * String.prototype.padEnd polyfill https://github.com/uxitten/polyfill/blob/master/string.polyfill.js
- * @param {string} str
- * @param {number} targetLength
- * @param {string} padString
- * @returns {string}
- */
-export function padEnd(str, targetLength, padString) {
-  targetLength = targetLength >> 0; //floor if number or convert non-number to 0;
-  padString = String((typeof padString !== 'undefined' ? padString : ' '));
-  if (str.length > targetLength) {
-    return String(str);
+// только до 9
+export function pluralize([zero, one, many], number) {
+  if (number === 1) {
+    return one;
   }
-  else {
-    targetLength = targetLength - str.length;
-    if (targetLength > padString.length) {
-      padString += padString.repeat(targetLength / padString.length); //append to original to ensure we are longer than needed
-    }
-    return String(str) + padString.slice(0, targetLength);
+
+  if (number > 1 && number < 5) {
+    return many;
   }
+
+  return zero;
 }

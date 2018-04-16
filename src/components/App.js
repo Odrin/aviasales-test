@@ -5,6 +5,7 @@ import logo2x from '../assets/logo@2x.png';
 import { CURRENCY_RUB } from '../constants/currencyCode';
 import { formatDate } from '../utils/format';
 import Panel from './Panel';
+import StopsFilter from './StopsFilter';
 import TicketList from './TicketList';
 import data from '../data/tickets';
 
@@ -12,16 +13,34 @@ class App extends Component {
   state = {
     data: data,
     currency: CURRENCY_RUB,
+    stops:  Array.from(new Set(data.tickets.map(ticket => ticket.stops))), // TODO: refactor
+  };
+
+  onStopsChange = (stops) => {
+    this.setState({ stops });
   };
 
   render() {
-    const { data, currency } = this.state;
-    const tickets = data.tickets.map(ticket => ({
+    const { data, currency, stops } = this.state;
+    let tickets = data.tickets.map(ticket => ({
       ...ticket,
       departure_date: formatDate(ticket.departure_date),
       arrival_date: formatDate(ticket.arrival_date),
       currency,
     }));
+    const { min, max } = data.tickets.reduce((prev, ticket) => {
+      if (!prev.min || prev.min > ticket.stops) {
+        prev.min = ticket.stops;
+      }
+
+      if (!prev.max || prev.max < ticket.stops) {
+        prev.max = ticket.stops;
+      }
+
+      return prev;
+    }, {});
+
+    tickets = tickets.filter(ticket => stops.includes(ticket.stops)); // reduce будет работать быстрее
 
     console.log(data.tickets);
 
@@ -33,7 +52,12 @@ class App extends Component {
         <div className="row-content">
           <div className="column-options">
             <Panel className="panel-options">
-              placeholder
+              <StopsFilter
+                min={min}
+                max={max}
+                stops={stops}
+                onChange={this.onStopsChange}
+              />
             </Panel>
           </div>
 
