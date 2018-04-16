@@ -12,7 +12,6 @@ import CurrencySwitcher from './CurrencySwitcher';
 import Panel from './Panel';
 import StopsFilter from './StopsFilter';
 import TicketList from './TicketList';
-import data from '../data/tickets';
 
 const currencyRate = {
   [CURRENCY_RUB]: 1,
@@ -22,10 +21,20 @@ const currencyRate = {
 
 class App extends Component {
   state = {
-    data: data,
+    tickets: [],
     currency: CURRENCY_RUB,
-    stops:  Array.from(new Set(data.tickets.map(ticket => ticket.stops))), // TODO: refactor
+    stops: [],
   };
+
+  componentDidMount() {
+    fetch('/data/tickets.json')
+      .then(response => response.json())
+      .then(data => this.setState({
+        tickets: data.tickets,
+        stops: [...new Set(data.tickets.map(ticket => ticket.stops))]
+      }))
+      .catch(error => alert(error))
+  }
 
   onStopsChange = (stops) => {
     this.setState({ stops });
@@ -36,15 +45,17 @@ class App extends Component {
   };
 
   render() {
-    const { data, currency, stops } = this.state;
-    let tickets = data.tickets.map(ticket => ({
-      ...ticket,
-      departure_date: formatDate(ticket.departure_date),
-      arrival_date: formatDate(ticket.arrival_date),
-      price: Math.round(ticket.price * currencyRate[currency]),
-      currency,
-    }));
-    const { min, max } = data.tickets.reduce((prev, ticket) => {
+    const { tickets, currency, stops } = this.state;
+    const mappedTickets = tickets
+      .filter(ticket => stops.includes(ticket.stops)) // reduce будет работать быстрее чем map + filter
+      .map(ticket => ({
+        ...ticket,
+        departure_date: formatDate(ticket.departure_date),
+        arrival_date: formatDate(ticket.arrival_date),
+        price: Math.round(ticket.price * currencyRate[currency]),
+        currency,
+      }));
+    const { min, max } = tickets.reduce((prev, ticket) => {
       if (!prev.min || prev.min > ticket.stops) {
         prev.min = ticket.stops;
       }
@@ -55,10 +66,6 @@ class App extends Component {
 
       return prev;
     }, {});
-
-    tickets = tickets.filter(ticket => stops.includes(ticket.stops)); // reduce будет работать быстрее
-
-    console.log(data.tickets);
 
     return (
       <div className="app-container">
@@ -83,7 +90,7 @@ class App extends Component {
           </div>
 
           <div className="column-ticket-list">
-            <TicketList tickets={tickets} />
+            <TicketList tickets={mappedTickets} />
           </div>
         </div>
       </div>

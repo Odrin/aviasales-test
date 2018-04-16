@@ -12,17 +12,24 @@ const labels = [
 
 class StopsFilter extends PureComponent {
   static propTypes = {
-    min: PropTypes.number.isRequired,
-    max: PropTypes.number.isRequired,
+    min: PropTypes.number,
+    max: PropTypes.number,
     stops: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
     onChange: PropTypes.func.isRequired,
   };
 
-  static defaultProps = {};
+  static defaultProps = {
+    min: null,
+    max: null,
+  };
 
   static getDerivedStateFromProps(nextProps, prevState) {
     const { min, max } = nextProps;
     const range = [];
+
+    if (min === null || max === null) {
+      return range;
+    }
 
     for (let i = min; i <= max; i++) {
       range.push(i);
