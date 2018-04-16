@@ -1,0 +1,57 @@
+.currency-switcher {
+  margin-bottom: 30px;
+}
+
+.currency-switcher .currency-title {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.58;
+  letter-spacing: .5px;
+  color: #4a4a4a;
+  text-transform: uppercase;
+}
+
+.currency-switcher .switcher {
+  display: flex;
+}
+
+.currency-switcher .switcher-button {
+  flex: 1 0 auto;
+  height: 40px;
+  border-radius: 0;
+  background-color: #fff;
+  border: solid 1px #d2d5d6;
+  padding: 0;
+  transition: all .3s ease;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.83;
+  letter-spacing: .5px;
+  color: #2196f3;
+  margin: 0 0 0 -1px;
+}
+
+.currency-switcher .switcher-button:hover {
+  cursor: pointer;
+  background-color: #f2fcff;
+  border-color: #64b5f5;
+  z-index: 1;
+}
+
+.currency-switcher .switcher-button.first {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  margin-left: 0;
+}
+
+.currency-switcher .switcher-button.last {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.currency-switcher .switcher-button.active {
+  background-color: #2196f3;
+  border-color: #64b5f5;
+  color: #fff;
+  z-index: 2;
+}

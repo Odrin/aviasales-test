@@ -2,12 +2,23 @@ import React, { Component } from 'react';
 import '../styles/App.css';
 import logo from '../assets/logo.png';
 import logo2x from '../assets/logo@2x.png';
-import { CURRENCY_RUB } from '../constants/currencyCode';
+import {
+  CURRENCY_EUR,
+  CURRENCY_RUB,
+  CURRENCY_USD,
+} from '../constants/currencyCode';
 import { formatDate } from '../utils/format';
+import CurrencySwitcher from './CurrencySwitcher';
 import Panel from './Panel';
 import StopsFilter from './StopsFilter';
 import TicketList from './TicketList';
 import data from '../data/tickets';
+
+const currencyRate = {
+  [CURRENCY_RUB]: 1,
+  [CURRENCY_USD]: 0.016038,
+  [CURRENCY_EUR]: 0.012955739,
+};
 
 class App extends Component {
   state = {
@@ -20,12 +31,17 @@ class App extends Component {
     this.setState({ stops });
   };
 
+  onCurrencyChange = (currency) => {
+    this.setState({ currency });
+  };
+
   render() {
     const { data, currency, stops } = this.state;
     let tickets = data.tickets.map(ticket => ({
       ...ticket,
       departure_date: formatDate(ticket.departure_date),
       arrival_date: formatDate(ticket.arrival_date),
+      price: Math.round(ticket.price * currencyRate[currency]),
       currency,
     }));
     const { min, max } = data.tickets.reduce((prev, ticket) => {
@@ -52,6 +68,11 @@ class App extends Component {
         <div className="row-content">
           <div className="column-options">
             <Panel className="panel-options">
+              <CurrencySwitcher
+                currency={currency}
+                onChange={this.onCurrencyChange}
+              />
+
               <StopsFilter
                 min={min}
                 max={max}
