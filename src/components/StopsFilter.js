@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import '../styles/StopsFilter.css';
 import { pluralize } from '../utils/format';
@@ -10,7 +10,7 @@ const labels = [
   'пересаки'
 ];
 
-class StopsFilter extends PureComponent {
+class StopsFilter extends Component {
   static propTypes = {
     min: PropTypes.number,
     max: PropTypes.number,

@@ -1,11 +1,11 @@
 import * as classnames from 'classnames';
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import '../styles/Checkbox.css';
 
 let index = 0;
 
-class Checkbox extends PureComponent {
+class Checkbox extends Component {
   static propTypes = {
     checked: PropTypes.bool.isRequired,
     children: PropTypes.string.isRequired,
