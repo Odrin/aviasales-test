@@ -22,13 +22,14 @@ function TicketItem(props) {
     stops,
     price,
     currency,
+    onBuyClick,
   } = props;
 
   return (
     <Panel className="ticket-item">
       <div className="ticket-left">
         <img className="carrier-ticket" src={`//pics.avs.io/99/36/${carrier}@2x.png`} alt={carrier} />
-        <button className="ticket-buy-button">
+        <button className="ticket-buy-button" onClick={onBuyClick}>
           Купить<br /> за {formatPrice(price)}<span className="currency">{formatCurrencySymbol(currency)}</span>
         </button>
       </div>
@@ -72,6 +73,7 @@ TicketItem.propTypes = {
   stops: PropTypes.number.isRequired,
   price: PropTypes.number.isRequired,
   currency: PropTypes.string.isRequired,
+  onBuyClick: PropTypes.func.isRequired,
 };
 
 TicketItem.defaultProps = {};

@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import '../styles/TicketList.css';
 import TicketItem from './TicketItem';
 
-function TicketList({ tickets }) {
+function TicketList({ tickets, onBuyClick }) {
   const items = tickets.map((ticket, index) => (
-    <TicketItem key={index.toString()} {...ticket} />
+    <TicketItem key={index.toString()} onBuyClick={onBuyClick} {...ticket} />
   ));
 
   return (
@@ -17,6 +17,7 @@ function TicketList({ tickets }) {
 
 TicketList.propTypes = {
   tickets: PropTypes.array,
+  onBuyClick: PropTypes.func.isRequired,
 };
 
 TicketList.defaultProps = {

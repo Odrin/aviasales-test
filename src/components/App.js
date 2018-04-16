@@ -44,6 +44,10 @@ class App extends Component {
     this.setState({ currency });
   };
 
+  onBuyClick = () => {
+    window.alert('Buy ticket!');
+  };
+
   render() {
     const { tickets, currency, stops } = this.state;
     const mappedTickets = tickets
@@ -90,7 +94,10 @@ class App extends Component {
           </div>
 
           <div className="column-ticket-list">
-            <TicketList tickets={mappedTickets} />
+            <TicketList
+              tickets={mappedTickets}
+              onBuyClick={this.onBuyClick}
+            />
           </div>
         </div>
       </div>
